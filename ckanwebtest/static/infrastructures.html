@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Infrastructures</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function list_() {
+            $("#response").val("Loading infrastructure list...");
+            $.ajax({
+                url: "/infrastructure_list",
+                success: function (result) {
+                    $("#response").val(result);
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function create() {
+            $("#response").val("Creating infrastructure...");
+            $.ajax({
+                url: "/infrastructure_create",
+                data: {
+                    "name": $("#name").val(),
+                    "title": $("#title").val(),
+                },
+                success: function (result) {
+                    $("#response").val(result);
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function update() {
+            $("#response").val("Updating infrastructure...");
+            $.ajax({
+                url: "/infrastructure_update",
+                data: {
+                    "id": $("#name").val(),
+                    "title": $("#title").val(),
+                },
+                success: function (result) {
+                    $("#response").val(result);
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function delete_() {
+            $("#response").val("Deleting infrastructure...");
+            $.ajax({
+                url: "/infrastructure_delete",
+                data: {
+                    "id": $("#name").val(),
+                },
+                success: function (result) {
+                    $("#response").val(result);
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <b>Configure Infrastructures</b>
+    <table>
+        <tr><td>Name:</td><td><input type="text" id="name"/></td></tr>
+        <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
+        <tr><td>Submit:</td><td>
+            <input type="button" value="List All" onclick="list_();"/>
+            <input type="button" value="Create" onclick="create();"/>
+            <input type="button" value="Update" onclick="update();"/>
+            <input type="button" value="Delete" onclick="delete_();"/>
+        </td></tr>
+        <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 800px"></textarea></td></tr>
+    </table>
+</body>
+</html>

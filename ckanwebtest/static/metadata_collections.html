@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Metadata Collections</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function list_() {
+            $("#response").val("Loading metadata collection list...");
+            $.ajax({
+                url: "/metadata_collection_list",
+                success: function (result) {
+                    $("#response").val(result);
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function create() {
+            $("#response").val("Creating metadata collection...");
+            $.ajax({
+                url: "/metadata_collection_create",
+                data: {
+                    "name": $("#name").val(),
+                    "title": $("#title").val(),
+                    "organization_id": $("#organization").val(),
+                },
+                success: function (result) {
+                    $("#response").val(result);
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function update() {
+            $("#response").val("Updating metadata collection...");
+            $.ajax({
+                url: "/metadata_collection_update",
+                data: {
+                    "id": $("#name").val(),
+                    "title": $("#title").val(),
+                },
+                success: function (result) {
+                    $("#response").val(result);
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function delete_() {
+            $("#response").val("Deleting metadata collection...");
+            $.ajax({
+                url: "/metadata_collection_delete",
+                data: {
+                    "id": $("#name").val(),
+                },
+                success: function (result) {
+                    $("#response").val(result);
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <b>Configure Metadata Collections</b>
+    <table>
+        <tr><td>Name:</td><td><input type="text" id="name"/></td></tr>
+        <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
+        <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
+        <tr><td>Submit:</td><td>
+            <input type="button" value="List All" onclick="list_();"/>
+            <input type="button" value="Create" onclick="create();"/>
+            <input type="button" value="Update" onclick="update();"/>
+            <input type="button" value="Delete" onclick="delete_();"/>
+        </td></tr>
+        <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 800px"></textarea></td></tr>
+    </table>
+</body>
+</html>

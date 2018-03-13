@@ -1,0 +1,9 @@
+[global]
+; CherryPy server config
+server.socket_port: 9091
+; URL of the JSONAPI Facade service
+jsonapi.url: ''
+; URL of the CKAN server
+ckan.url: ''
+; API key for modifying CKAN data. N.B. This should not be used in a production environment!
+ckan.apikey: ''
