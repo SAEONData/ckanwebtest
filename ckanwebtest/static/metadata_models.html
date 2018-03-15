@@ -28,6 +28,7 @@
                     "metadata_schema_id": $("#metadata_schema_id").val(),
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
+                    "model_json": $("#model_json").val(),
                 },
                 success: function (result) {
                     $("#response").val(result);
@@ -43,11 +44,12 @@
             $.ajax({
                 url: "/metadata_model_update",
                 data: {
-                    "id": $("#id").val(),
+                    "id": $("#name").val(),
                     "title": $("#title").val(),
                     "metadata_schema_id": $("#metadata_schema_id").val(),
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
+                    "model_json": $("#model_json").val(),
                 },
                 success: function (result) {
                     $("#response").val(result);
@@ -63,7 +65,7 @@
             $.ajax({
                 url: "/metadata_model_delete",
                 data: {
-                    "id": $("#id").val(),
+                    "id": $("#name").val(),
                 },
                 success: function (result) {
                     $("#response").val(result);
@@ -78,11 +80,12 @@
 <body>
     <b>Configure Metadata Models</b>
     <table>
-        <tr><td>ID:</td><td><input type="text" id="id"/></td></tr>
+        <tr><td>Name:</td><td><input type="text" id="name"/> * for update only</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
         <tr><td>Metadata Schema ID:</td><td><input type="text" id="metadata_schema_id"/></td></tr>
         <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
         <tr><td>Infrastructure:</td><td><input type="text" id="infrastructure"/></td></tr>
+        <tr><td>Model JSON:</td><td><textarea id="model_json" style="width: 800px; height: 200px"></textarea></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
             <input type="button" value="Create" onclick="create();"/>
