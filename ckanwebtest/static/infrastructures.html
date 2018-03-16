@@ -9,7 +9,10 @@
         function list_() {
             $("#response").val("Loading infrastructure list...");
             $.ajax({
-                url: "/infrastructure_list",
+                url: "/action/infrastructure_list",
+                data: {
+                    "all_fields": $("#all_fields").prop("checked"),
+                },
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -22,7 +25,8 @@
         function create() {
             $("#response").val("Creating infrastructure...");
             $.ajax({
-                url: "/infrastructure_create",
+                url: "/action/infrastructure_create",
+                method: "POST",
                 data: {
                     "name": $("#name").val(),
                     "title": $("#title").val(),
@@ -39,7 +43,8 @@
         function update() {
             $("#response").val("Updating infrastructure...");
             $.ajax({
-                url: "/infrastructure_update",
+                url: "/action/infrastructure_update",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                     "title": $("#title").val(),
@@ -56,7 +61,8 @@
         function delete_() {
             $("#response").val("Deleting infrastructure...");
             $.ajax({
-                url: "/infrastructure_delete",
+                url: "/action/infrastructure_delete",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                 },
@@ -77,6 +83,7 @@
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
+            <input type="checkbox" id="all_fields"/> All fields
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>

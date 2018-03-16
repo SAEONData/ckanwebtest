@@ -9,7 +9,10 @@
         function list_() {
             $("#response").val("Loading metadata collection list...");
             $.ajax({
-                url: "/metadata_collection_list",
+                url: "/action/metadata_collection_list",
+                data: {
+                    "all_fields": $("#all_fields").prop("checked"),
+                },
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -22,7 +25,8 @@
         function create() {
             $("#response").val("Creating metadata collection...");
             $.ajax({
-                url: "/metadata_collection_create",
+                url: "/action/metadata_collection_create",
+                method: "POST",
                 data: {
                     "name": $("#name").val(),
                     "title": $("#title").val(),
@@ -40,7 +44,8 @@
         function update() {
             $("#response").val("Updating metadata collection...");
             $.ajax({
-                url: "/metadata_collection_update",
+                url: "/action/metadata_collection_update",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                     "title": $("#title").val(),
@@ -57,7 +62,8 @@
         function delete_() {
             $("#response").val("Deleting metadata collection...");
             $.ajax({
-                url: "/metadata_collection_delete",
+                url: "/action/metadata_collection_delete",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                 },
@@ -79,6 +85,7 @@
         <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
+            <input type="checkbox" id="all_fields"/> All fields
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>

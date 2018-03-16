@@ -9,7 +9,10 @@
         function list_() {
             $("#response").val("Loading organization list...");
             $.ajax({
-                url: "/organization_list",
+                url: "/action/organization_list",
+                data: {
+                    "all_fields": $("#all_fields").prop("checked"),
+                },
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -22,7 +25,8 @@
         function create() {
             $("#response").val("Creating organization...");
             $.ajax({
-                url: "/organization_create",
+                url: "/action/organization_create",
+                method: "POST",
                 data: {
                     "name": $("#name").val(),
                     "title": $("#title").val(),
@@ -39,7 +43,8 @@
         function update() {
             $("#response").val("Updating organization...");
             $.ajax({
-                url: "/organization_update",
+                url: "/action/organization_update",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                     "title": $("#title").val(),
@@ -56,7 +61,8 @@
         function delete_() {
             $("#response").val("Deleting organization...");
             $.ajax({
-                url: "/organization_delete",
+                url: "/action/organization_delete",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                 },
@@ -77,6 +83,7 @@
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
+            <input type="checkbox" id="all_fields"/> All fields
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>

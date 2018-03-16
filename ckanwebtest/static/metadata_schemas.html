@@ -9,7 +9,10 @@
         function list_() {
             $("#response").val("Loading metadata schema list...");
             $.ajax({
-                url: "/metadata_schema_list",
+                url: "/action/metadata_schema_list",
+                data: {
+                    "all_fields": $("#all_fields").prop("checked"),
+                },
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -22,7 +25,8 @@
         function create() {
             $("#response").val("Creating metadata schema...");
             $.ajax({
-                url: "/metadata_schema_create",
+                url: "/action/metadata_schema_create",
+                method: "POST",
                 data: {
                     "title": $("#title").val(),
                     "schema_name": $("#schema_name").val(),
@@ -42,7 +46,8 @@
         function update() {
             $("#response").val("Updating metadata schema...");
             $.ajax({
-                url: "/metadata_schema_update",
+                url: "/action/metadata_schema_update",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                     "title": $("#title").val(),
@@ -63,7 +68,8 @@
         function delete_() {
             $("#response").val("Deleting metadata schema...");
             $.ajax({
-                url: "/metadata_schema_delete",
+                url: "/action/metadata_schema_delete",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                 },
@@ -88,6 +94,7 @@
         <tr><td>Base Schema ID:</td><td><input type="text" id="base_schema_id"/></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
+            <input type="checkbox" id="all_fields"/> All fields
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>

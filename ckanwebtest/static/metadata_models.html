@@ -9,7 +9,10 @@
         function list_() {
             $("#response").val("Loading metadata model list...");
             $.ajax({
-                url: "/metadata_model_list",
+                url: "/action/metadata_model_list",
+                data: {
+                    "all_fields": $("#all_fields").prop("checked"),
+                },
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -22,7 +25,8 @@
         function create() {
             $("#response").val("Creating metadata model...");
             $.ajax({
-                url: "/metadata_model_create",
+                url: "/action/metadata_model_create",
+                method: "POST",
                 data: {
                     "title": $("#title").val(),
                     "metadata_schema_id": $("#metadata_schema_id").val(),
@@ -42,7 +46,8 @@
         function update() {
             $("#response").val("Updating metadata model...");
             $.ajax({
-                url: "/metadata_model_update",
+                url: "/action/metadata_model_update",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                     "title": $("#title").val(),
@@ -63,7 +68,8 @@
         function delete_() {
             $("#response").val("Deleting metadata model...");
             $.ajax({
-                url: "/metadata_model_delete",
+                url: "/action/metadata_model_delete",
+                method: "POST",
                 data: {
                     "id": $("#name").val(),
                 },
@@ -88,6 +94,7 @@
         <tr><td>Model JSON:</td><td><textarea id="model_json" style="width: 800px; height: 200px"></textarea></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
+            <input type="checkbox" id="all_fields"/> All fields
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>
