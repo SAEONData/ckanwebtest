@@ -6,6 +6,7 @@ from ckanwebtest import *
 from ckanapi import RemoteCKAN
 
 
+@cherrypy.popargs('action_name')
 class Action:
 
     @cherrypy.expose
@@ -24,16 +25,6 @@ class Action:
 
 
 class Application:
-
-    def __init__(self):
-        self._action = Action()
-
-    def _cp_dispatch(self, vpath):
-        if len(vpath) > 1 and vpath[0] == 'action':
-            vpath.pop(0)
-            cherrypy.request.params['action_name'] = vpath.pop(0)
-            return self._action
-        return vpath
 
     @cherrypy.expose
     def index(self):
@@ -69,4 +60,7 @@ class Application:
 
 if __name__ == "__main__":
     cherrypy.config.update(CONFIG_FILE)
-    cherrypy.quickstart(Application())
+    cherrypy.tree.mount(Application(), '/')
+    cherrypy.tree.mount(Action(), '/action', config={'/': {'tools.trailing_slash.on': False}})
+    cherrypy.engine.start()
+    cherrypy.engine.block()
