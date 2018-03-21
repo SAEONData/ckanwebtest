@@ -10,18 +10,20 @@ from ckanapi import RemoteCKAN
 class Action:
 
     @cherrypy.expose
-    def index(self, action_name, **kwargs):
+    @cherrypy.tools.json_in()
+    def index(self, action_name):
+        data = cherrypy.request.json
         url = cherrypy.config['ckan.url']
         apikey = cherrypy.config['ckan.apikey']
-        get_only = action_name.endswith('_list')
+        get_only = action_name.endswith(('_list', '_show'))
 
         with RemoteCKAN(url, apikey=apikey, get_only=get_only) as ckan:
             try:
-                result = ckan.call_action(action_name, data_dict=kwargs)
+                result = ckan.call_action(action_name, data_dict=data)
             except Exception as e:
                 result = e.args[0] if len(e.args) == 1 else e.args
 
-        return json.dumps(result, indent=4)
+        return result if type(result) is str else json.dumps(result, indent=4)
 
 
 class Application:
@@ -56,6 +58,11 @@ class Application:
     @cherrypy.expose
     def metadata_models(self):
         return METADATA_MODELS_HTML
+
+    @cherrypy.expose
+    def metadata_records(self):
+        return METADATA_RECORDS_HTML \
+            .replace('SAMPLE_METADATA_JSON', SAMPLE_METADATA_JSON)
 
 
 if __name__ == "__main__":

@@ -2,18 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Metadata Schemas</title>
+    <title>Metadata Records</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
         function list_() {
-            $("#response").val("Loading metadata schema list...");
+            $("#response").val("Loading metadata record list...");
             $.ajax({
-                url: "/action/metadata_schema_list",
+                url: "/action/metadata_record_list",
+                method: "POST",
+                contentType: "application/json",
+                data: "{}",
+                success: function (result) {
+                    $("#response").val(result);
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function show() {
+            $("#response").val("Fetching metadata record...");
+            $.ajax({
+                url: "/action/metadata_record_show",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
-                    "all_fields": $("#all_fields").prop("checked"),
+                    "id": $("#name").val(),
                 }),
                 success: function (result) {
                     $("#response").val(result);
@@ -24,18 +40,34 @@
             });
         }
 
+        function get_infrastructures() {
+            var infrastructures = [];
+            var infrastructures_text = $("#infrastructures").val();
+            if (infrastructures_text.length > 0) {
+                var infrastructure_names = infrastructures_text.split(",");
+                for (var i = 0; i < infrastructure_names.length; i++) {
+                    infrastructures.push({"id": infrastructure_names[i]});
+                }
+            }
+            return infrastructures;
+        }
+
         function create() {
-            $("#response").val("Creating metadata schema...");
+            $("#response").val("Creating metadata record...");
             $.ajax({
-                url: "/action/metadata_schema_create",
+                url: "/action/metadata_record_create",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
                     "title": $("#title").val(),
+                    "owner_org": $("#organization").val(),
+                    "metadata_collection_id": $("#metadata_collection").val(),
+                    "infrastructures": get_infrastructures(),
                     "schema_name": $("#schema_name").val(),
                     "schema_version": $("#schema_version").val(),
-                    "schema_xsd": $("#schema_xsd").val(),
-                    "base_schema_id": $("#base_schema_id").val(),
+                    "content_json": $("#metadata_json").val(),
+                    "content_raw": "",
+                    "content_url": "",
                 }),
                 success: function (result) {
                     $("#response").val(result);
@@ -47,18 +79,22 @@
         }
 
         function update() {
-            $("#response").val("Updating metadata schema...");
+            $("#response").val("Updating metadata record...");
             $.ajax({
-                url: "/action/metadata_schema_update",
+                url: "/action/metadata_record_update",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
                     "title": $("#title").val(),
+                    "owner_org": $("#organization").val(),
+                    "metadata_collection_id": $("#metadata_collection").val(),
+                    "infrastructures": get_infrastructures(),
                     "schema_name": $("#schema_name").val(),
                     "schema_version": $("#schema_version").val(),
-                    "schema_xsd": $("#schema_xsd").val(),
-                    "base_schema_id": $("#base_schema_id").val(),
+                    "content_json": $("#metadata_json").val(),
+                    "content_raw": "",
+                    "content_url": "",
                 }),
                 success: function (result) {
                     $("#response").val(result);
@@ -70,9 +106,9 @@
         }
 
         function delete_() {
-            $("#response").val("Deleting metadata schema...");
+            $("#response").val("Deleting metadata record...");
             $.ajax({
-                url: "/action/metadata_schema_delete",
+                url: "/action/metadata_record_delete",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -89,17 +125,21 @@
     </script>
 </head>
 <body>
-    <b>Configure Metadata Schemas</b>
+    <b>Configure Metadata Records</b>
     <table>
         <tr><td>Name:</td><td><input type="text" id="name"/> * auto-generated on create</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
-        <tr><td>Schema Name:</td><td><input type="text" id="schema_name"/></td></tr>
-        <tr><td>Schema Version:</td><td><input type="text" id="schema_version"/></td></tr>
-        <tr><td>Schema XSD:</td><td><textarea id="schema_xsd" style="width: 800px; height: 200px"></textarea></td></tr>
-        <tr><td>Base Schema ID:</td><td><input type="text" id="base_schema_id"/></td></tr>
+        <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
+        <tr><td>Metadata Collection:</td><td><input type="text" id="metadata_collection"/></td></tr>
+        <tr><td>Infrastructures:</td><td><input type="text" id="infrastructures"/> * comma-separated list</td></tr>
+        <tr><td>Schema Name:</td><td><input type="text" id="schema_name" value="DataCite"/></td></tr>
+        <tr><td>Schema Version:</td><td><input type="text" id="schema_version" value="3.1"/></td></tr>
+        <tr><td>Metadata JSON:</td><td>
+            <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
+        </td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
-            <input type="checkbox" id="all_fields"/> All fields
+            <input type="button" value="Show" onclick="show();"/>
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>

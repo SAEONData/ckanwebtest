@@ -6,7 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
-        function doSubmit() {
+        function submit() {
             var institution = $("#institution").val();
             var repository = $("#repository").val();
             var url = "JSONAPI_URL/Institutions/" + institution + "/" + repository + "/metadata/jsonCreateMetadataAsJson";
@@ -15,13 +15,12 @@
             $.ajax({
                 url: url,
                 method: "POST",
-                data: {
+                contentType: "application/json",
+                data: JSON.stringify({
                     "schema_name": $("#schema_name").val(),
                     "schema_version": $("#schema_version").val(),
                     "metadata_json": $("#metadata_json").val(),
-                    "server_url": $("#server_url").val(),
-                    "api_key": $("#api_key").val()
-                },
+                }),
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -42,10 +41,8 @@
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
         </td></tr>
-        <tr><td>API Key:</td><td><input type="text" id="api_key"/></td></tr>
-        <tr><td>Server URL:</td><td>
-            <input type="text" id="server_url"/>
-            <input type="button" value="Submit" onclick="doSubmit();"/>
+        <tr><td>Submit:</td><td>
+            <input type="button" value="Submit" onclick="submit();"/>
         </td></tr>
         <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 200px"></textarea></td></tr>
     </table>

@@ -10,9 +10,11 @@
             $("#response").val("Loading metadata collection list...");
             $.ajax({
                 url: "/action/metadata_collection_list",
-                data: {
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
                     "all_fields": $("#all_fields").prop("checked"),
-                },
+                }),
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -27,11 +29,12 @@
             $.ajax({
                 url: "/action/metadata_collection_create",
                 method: "POST",
-                data: {
+                contentType: "application/json",
+                data: JSON.stringify({
                     "name": $("#name").val(),
                     "title": $("#title").val(),
                     "organization_id": $("#organization").val(),
-                },
+                }),
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -46,10 +49,11 @@
             $.ajax({
                 url: "/action/metadata_collection_update",
                 method: "POST",
-                data: {
+                contentType: "application/json",
+                data: JSON.stringify({
                     "id": $("#name").val(),
                     "title": $("#title").val(),
-                },
+                }),
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -64,9 +68,10 @@
             $.ajax({
                 url: "/action/metadata_collection_delete",
                 method: "POST",
-                data: {
+                contentType: "application/json",
+                data: JSON.stringify({
                     "id": $("#name").val(),
-                },
+                }),
                 success: function (result) {
                     $("#response").val(result);
                 },

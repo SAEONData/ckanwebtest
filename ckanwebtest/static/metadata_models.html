@@ -10,9 +10,11 @@
             $("#response").val("Loading metadata model list...");
             $.ajax({
                 url: "/action/metadata_model_list",
-                data: {
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
                     "all_fields": $("#all_fields").prop("checked"),
-                },
+                }),
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -27,13 +29,14 @@
             $.ajax({
                 url: "/action/metadata_model_create",
                 method: "POST",
-                data: {
+                contentType: "application/json",
+                data: JSON.stringify({
                     "title": $("#title").val(),
                     "metadata_schema_id": $("#metadata_schema_id").val(),
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
                     "model_json": $("#model_json").val(),
-                },
+                }),
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -48,14 +51,15 @@
             $.ajax({
                 url: "/action/metadata_model_update",
                 method: "POST",
-                data: {
+                contentType: "application/json",
+                data: JSON.stringify({
                     "id": $("#name").val(),
                     "title": $("#title").val(),
                     "metadata_schema_id": $("#metadata_schema_id").val(),
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
                     "model_json": $("#model_json").val(),
-                },
+                }),
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -70,9 +74,10 @@
             $.ajax({
                 url: "/action/metadata_model_delete",
                 method: "POST",
-                data: {
+                contentType: "application/json",
+                data: JSON.stringify({
                     "id": $("#name").val(),
-                },
+                }),
                 success: function (result) {
                     $("#response").val(result);
                 },
@@ -86,7 +91,7 @@
 <body>
     <b>Configure Metadata Models</b>
     <table>
-        <tr><td>Name:</td><td><input type="text" id="name"/> * for update only</td></tr>
+        <tr><td>Name:</td><td><input type="text" id="name"/> * auto-generated on create</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
         <tr><td>Metadata Schema ID:</td><td><input type="text" id="metadata_schema_id"/></td></tr>
         <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
