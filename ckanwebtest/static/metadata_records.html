@@ -12,9 +12,10 @@
                 url: "/action/metadata_record_list",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: "{}",
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -28,11 +29,12 @@
                 url: "/action/metadata_record_show",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -58,6 +60,7 @@
                 url: "/action/metadata_record_create",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "title": $("#title").val(),
                     "owner_org": $("#organization").val(),
@@ -70,7 +73,7 @@
                     "content_url": "",
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -84,6 +87,7 @@
                 url: "/action/metadata_record_update",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
                     "title": $("#title").val(),
@@ -97,7 +101,7 @@
                     "content_url": "",
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -111,11 +115,12 @@
                 url: "/action/metadata_record_delete",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -132,8 +137,8 @@
         <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
         <tr><td>Metadata Collection:</td><td><input type="text" id="metadata_collection"/></td></tr>
         <tr><td>Infrastructures:</td><td><input type="text" id="infrastructures"/> * comma-separated list</td></tr>
-        <tr><td>Schema Name:</td><td><input type="text" id="schema_name" value="DataCite"/></td></tr>
-        <tr><td>Schema Version:</td><td><input type="text" id="schema_version" value="3.1"/></td></tr>
+        <tr><td>Schema Name:</td><td><input type="text" id="schema_name"/></td></tr>
+        <tr><td>Schema Version:</td><td><input type="text" id="schema_version"/></td></tr>
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
         </td></tr>

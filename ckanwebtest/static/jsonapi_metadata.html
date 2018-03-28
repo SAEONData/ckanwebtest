@@ -16,13 +16,15 @@
                 url: url,
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
-                    "schema_name": $("#schema_name").val(),
-                    "schema_version": $("#schema_version").val(),
-                    "metadata_json": $("#metadata_json").val(),
+                    "__ac_name": $("#username").val(),
+                    "__ac_password": $("#password").val(),
+                    "metadataType": $("#metadata_schema").val(),
+                    "jsonData": $("#metadata_json").val(),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -36,11 +38,12 @@
     <table>
         <tr><td>Institution:</td><td><input type="text" id="institution"/></td></tr>
         <tr><td>Repository:</td><td><input type="text" id="repository"/></td></tr>
-        <tr><td>Schema Name:</td><td><input type="text" id="schema_name" value="DataCite"/></td></tr>
-        <tr><td>Schema Version:</td><td><input type="text" id="schema_version" value="3.1"/></td></tr>
+        <tr><td>Metadata Schema:</td><td><input type="text" id="metadata_schema" value="DataCite"/></td></tr>
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
         </td></tr>
+        <tr><td>Username:</td><td><input type="text" id="username"/></td></tr>
+        <tr><td>Password:</td><td><input type="text" id="password"/></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="Submit" onclick="submit();"/>
         </td></tr>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import cherrypy
-import json
+import re
 
 from ckanwebtest import *
 from ckanapi import RemoteCKAN
@@ -11,6 +11,7 @@ class Action:
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
     def index(self, action_name):
         data = cherrypy.request.json
         url = cherrypy.config['ckan.url']
@@ -19,11 +20,21 @@ class Action:
 
         with RemoteCKAN(url, apikey=apikey, get_only=get_only) as ckan:
             try:
-                result = ckan.call_action(action_name, data_dict=data)
-            except Exception as e:
-                result = e.args[0] if len(e.args) == 1 else e.args
+                return ckan.call_action(action_name, data_dict=data)
 
-        return result if type(result) is str else json.dumps(result, indent=4)
+            except Exception as e:
+                # return a structured error message if available
+                if len(e.args) > 0 and type(e.args[0]) is not str:
+                    return e.args[0]
+                else:
+                    # otherwise return the exception string; if an HTML error doc was returned
+                    # from CKAN, strip it out and replace with debug url if possible
+                    debug_match = re.search(r'\bdebug_count = ([0-9]+)\b', str(e))
+                    if debug_match:
+                        info = "'{}/_debug/view/{}'".format(url, debug_match.group(1))
+                    else:
+                        info = "'Server Error'"
+                    return re.sub(r"'<!DOCTYPE html .*</html>.*'", info, str(e))
 
 
 class Application:

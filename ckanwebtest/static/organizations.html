@@ -12,11 +12,12 @@
                 url: "/action/organization_list",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "all_fields": $("#all_fields").prop("checked"),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -30,12 +31,13 @@
                 url: "/action/organization_create",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "name": $("#name").val(),
                     "title": $("#title").val(),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -49,12 +51,13 @@
                 url: "/action/organization_update",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
                     "title": $("#title").val(),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -68,11 +71,12 @@
                 url: "/action/organization_delete",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);

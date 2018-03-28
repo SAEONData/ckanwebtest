@@ -12,11 +12,12 @@
                 url: "/action/metadata_schema_list",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "all_fields": $("#all_fields").prop("checked"),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -30,6 +31,7 @@
                 url: "/action/metadata_schema_create",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "title": $("#title").val(),
                     "schema_name": $("#schema_name").val(),
@@ -38,7 +40,7 @@
                     "base_schema_id": $("#base_schema_id").val(),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -52,6 +54,7 @@
                 url: "/action/metadata_schema_update",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
                     "title": $("#title").val(),
@@ -61,7 +64,7 @@
                     "base_schema_id": $("#base_schema_id").val(),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
@@ -75,11 +78,12 @@
                 url: "/action/metadata_schema_delete",
                 method: "POST",
                 contentType: "application/json",
+                dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
                 }),
                 success: function (result) {
-                    $("#response").val(result);
+                    $("#response").val(JSON.stringify(result, null, 4));
                 },
                 error: function (call, state, msg) {
                     $("#response").val(msg);
