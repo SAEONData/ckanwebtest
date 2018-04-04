@@ -2,14 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JSON API - Submit Metadata</title>
+    <title>JSON API - View Institutions</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
         function submit() {
-            var institution = $("#institution").val();
-            var repository = $("#repository").val();
-            var url = "JSONAPI_URL/Institutions/" + institution + "/" + repository + "/metadata/jsonCreateMetadataAsJson";
+            var url = "JSONAPI_URL/Institutions/jsonContent";
 
             $("#response").val("Loading...");
             $.ajax({
@@ -20,8 +18,7 @@
                 data: JSON.stringify({
                     "__ac_name": $("#username").val(),
                     "__ac_password": $("#password").val(),
-                    "metadataType": $("#metadata_schema").val(),
-                    "jsonData": $("#metadata_json").val(),
+                    "types": "Institution",
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -34,14 +31,8 @@
     </script>
 </head>
 <body>
-    <b>Create Metadata</b>
+    <b>List Institutions</b>
     <table>
-        <tr><td>Institution:</td><td><input type="text" id="institution"/></td></tr>
-        <tr><td>Repository:</td><td><input type="text" id="repository"/></td></tr>
-        <tr><td>Metadata Schema:</td><td><input type="text" id="metadata_schema" value="DataCite"/></td></tr>
-        <tr><td>Metadata JSON:</td><td>
-            <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
-        </td></tr>
         <tr><td>Username:</td><td><input type="text" id="username"/></td></tr>
         <tr><td>Password:</td><td><input type="text" id="password"/></td></tr>
         <tr><td>Submit:</td><td>

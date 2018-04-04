@@ -51,6 +51,12 @@ class Application:
             .replace('SAMPLE_METADATA_JSON', SAMPLE_METADATA_JSON)
 
     @cherrypy.expose
+    def jsonapi_institutions(self):
+        jsonapi_url = cherrypy.config['jsonapi.url']
+        return JSONAPI_INSTITUTIONS_HTML \
+            .replace('JSONAPI_URL', jsonapi_url)
+
+    @cherrypy.expose
     def organizations(self):
         return ORGANIZATIONS_HTML
 
