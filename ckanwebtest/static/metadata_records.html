@@ -132,12 +132,12 @@
 <body>
     <b>Configure Metadata Records</b>
     <table>
-        <tr><td>Name:</td><td><input type="text" id="name"/> * auto-generated on create</td></tr>
+        <tr><td>Name:</td><td><input type="text" id="name"/> (auto-generated on create)</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
-        <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
-        <tr><td>Metadata Collection:</td><td><input type="text" id="metadata_collection"/></td></tr>
-        <tr><td>Infrastructures:</td><td><input type="text" id="infrastructures"/> * comma-separated list</td></tr>
-        <tr><td>Schema Name:</td><td><input type="text" id="schema_name"/></td></tr>
+        <tr><td>Organization:</td><td><input type="text" id="organization"/> *</td></tr>
+        <tr><td>Metadata Collection:</td><td><input type="text" id="metadata_collection"/> *</td></tr>
+        <tr><td>Infrastructures:</td><td><input type="text" id="infrastructures"/> (comma-separated list)</td></tr>
+        <tr><td>Schema Name:</td><td><input type="text" id="schema_name"/> *</td></tr>
         <tr><td>Schema Version:</td><td><input type="text" id="schema_version"/></td></tr>
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
@@ -149,7 +149,7 @@
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>
         </td></tr>
-        <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 800px"></textarea></td></tr>
+        <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 600px"></textarea></td></tr>
     </table>
 </body>
 </html>
