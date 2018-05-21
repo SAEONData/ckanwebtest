@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Metadata Models</title>
+    <title>Workflow Rules</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
         function list_() {
-            $("#response").val("Loading metadata model list...");
+            $("#response").val("Loading workflow rule list...");
             $.ajax({
-                url: "/action/metadata_model_list",
+                url: "/action/workflow_rule_list",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
@@ -26,18 +26,17 @@
         }
 
         function create() {
-            $("#response").val("Creating metadata model...");
+            $("#response").val("Creating workflow rule...");
             $.ajax({
-                url: "/action/metadata_model_create",
+                url: "/action/workflow_rule_create",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "title": $("#title").val(),
-                    "metadata_schema_id": $("#metadata_schema").val(),
-                    "organization_id": $("#organization").val(),
-                    "infrastructure_id": $("#infrastructure").val(),
-                    "model_json": $("#model_json").val(),
+                    "id": $("#id").val(),
+                    "workflow_state_id": $("#workflow_state").val(),
+                    "workflow_metric_id": $("#workflow_metric").val(),
+                    "rule_json": $("#rule_json").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -49,19 +48,15 @@
         }
 
         function update() {
-            $("#response").val("Updating metadata model...");
+            $("#response").val("Updating workflow rule...");
             $.ajax({
-                url: "/action/metadata_model_update",
+                url: "/action/workflow_rule_update",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "id": $("#name").val(),
-                    "title": $("#title").val(),
-                    "metadata_schema_id": $("#metadata_schema").val(),
-                    "organization_id": $("#organization").val(),
-                    "infrastructure_id": $("#infrastructure").val(),
-                    "model_json": $("#model_json").val(),
+                    "id": $("#id").val(),
+                    "rule_json": $("#rule_json").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -73,14 +68,14 @@
         }
 
         function delete_() {
-            $("#response").val("Deleting metadata model...");
+            $("#response").val("Deleting workflow rule...");
             $.ajax({
-                url: "/action/metadata_model_delete",
+                url: "/action/workflow_rule_delete",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "id": $("#name").val(),
+                    "id": $("#id").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -93,14 +88,12 @@
     </script>
 </head>
 <body>
-    <b>Configure Metadata Models</b>
+    <b>Configure Workflow Rules</b>
     <table>
-        <tr><td>Name:</td><td><input type="text" id="name"/> * auto-generated on create</td></tr>
-        <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
-        <tr><td>Metadata Schema:</td><td><input type="text" id="metadata_schema"/></td></tr>
-        <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
-        <tr><td>Infrastructure:</td><td><input type="text" id="infrastructure"/></td></tr>
-        <tr><td>Model JSON:</td><td><textarea id="model_json" style="width: 800px; height: 200px"></textarea></td></tr>
+        <tr><td>ID:</td><td><input type="text" id="id"/> * for delete only</td></tr>
+        <tr><td>Workflow State:</td><td><input type="text" id="workflow_state"/></td></tr>
+        <tr><td>Workflow Metric:</td><td><input type="text" id="workflow_metric"/></td></tr>
+        <tr><td>Rule JSON:</td><td><textarea id="rule_json" style="width: 800px; height: 200px"></textarea></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
             <input type="checkbox" id="all_fields"/> All fields

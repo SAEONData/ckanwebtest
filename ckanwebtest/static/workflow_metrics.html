@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Metadata Models</title>
+    <title>Workflow Metrics</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
         function list_() {
-            $("#response").val("Loading metadata model list...");
+            $("#response").val("Loading workflow metric list...");
             $.ajax({
-                url: "/action/metadata_model_list",
+                url: "/action/workflow_metric_list",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
@@ -26,18 +26,16 @@
         }
 
         function create() {
-            $("#response").val("Creating metadata model...");
+            $("#response").val("Creating workflow metric...");
             $.ajax({
-                url: "/action/metadata_model_create",
+                url: "/action/workflow_metric_create",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
+                    "name": $("#name").val(),
                     "title": $("#title").val(),
-                    "metadata_schema_id": $("#metadata_schema").val(),
-                    "organization_id": $("#organization").val(),
-                    "infrastructure_id": $("#infrastructure").val(),
-                    "model_json": $("#model_json").val(),
+                    "evaluator_url": $("#evaluator_url").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -49,19 +47,16 @@
         }
 
         function update() {
-            $("#response").val("Updating metadata model...");
+            $("#response").val("Updating workflow metric...");
             $.ajax({
-                url: "/action/metadata_model_update",
+                url: "/action/workflow_metric_update",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
                     "title": $("#title").val(),
-                    "metadata_schema_id": $("#metadata_schema").val(),
-                    "organization_id": $("#organization").val(),
-                    "infrastructure_id": $("#infrastructure").val(),
-                    "model_json": $("#model_json").val(),
+                    "evaluator_url": $("#evaluator_url").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -73,9 +68,9 @@
         }
 
         function delete_() {
-            $("#response").val("Deleting metadata model...");
+            $("#response").val("Deleting workflow metric...");
             $.ajax({
-                url: "/action/metadata_model_delete",
+                url: "/action/workflow_metric_delete",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
@@ -93,14 +88,11 @@
     </script>
 </head>
 <body>
-    <b>Configure Metadata Models</b>
+    <b>Configure Workflow Metrics</b>
     <table>
-        <tr><td>Name:</td><td><input type="text" id="name"/> * auto-generated on create</td></tr>
+        <tr><td>Name:</td><td><input type="text" id="name"/></td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
-        <tr><td>Metadata Schema:</td><td><input type="text" id="metadata_schema"/></td></tr>
-        <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
-        <tr><td>Infrastructure:</td><td><input type="text" id="infrastructure"/></td></tr>
-        <tr><td>Model JSON:</td><td><textarea id="model_json" style="width: 800px; height: 200px"></textarea></td></tr>
+        <tr><td>Evaluator URL:</td><td><input type="text" id="evaluator_url"/></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
             <input type="checkbox" id="all_fields"/> All fields

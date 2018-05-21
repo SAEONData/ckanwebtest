@@ -81,6 +81,22 @@ class Application:
         return METADATA_RECORDS_HTML \
             .replace('SAMPLE_METADATA_JSON', SAMPLE_METADATA_JSON)
 
+    @cherrypy.expose
+    def workflow_states(self):
+        return WORKFLOW_STATES_HTML
+
+    @cherrypy.expose
+    def workflow_transitions(self):
+        return WORKFLOW_TRANSITIONS_HTML
+
+    @cherrypy.expose
+    def workflow_metrics(self):
+        return WORKFLOW_METRICS_HTML
+
+    @cherrypy.expose
+    def workflow_rules(self):
+        return WORKFLOW_RULES_HTML
+
 
 if __name__ == "__main__":
     cherrypy.config.update(CONFIG_FILE)
