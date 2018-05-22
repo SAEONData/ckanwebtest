@@ -6,6 +6,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
+        function load_lookup(url, select) {
+            $.ajax({
+                url: url,
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: "{}",
+                success: function (result) {
+                    for(var i = 0; i < result.length; i++) {
+                        var opt = result[i];
+                        var el = document.createElement("option");
+                        el.textContent = opt;
+                        el.value = opt;
+                        select.appendChild(el);
+                    }
+                },
+                error: function (call, state, msg) {
+                    select.firstChild.textContent = "Error loading objects";
+                }
+            });
+        }
+
+        function load_lookups() {
+            load_lookup("/action/organization_list", document.getElementById("organization"));
+            load_lookup("/action/infrastructure_list", document.getElementById("infrastructures"));
+            load_lookup("/action/metadata_collection_list", document.getElementById("metadata_collection"));
+        }
+
+        window.onload = load_lookups;
+
         function list_() {
             $("#response").val("Loading metadata record list...");
             $.ajax({
@@ -44,12 +74,9 @@
 
         function get_infrastructures() {
             var infrastructures = [];
-            var infrastructures_text = $("#infrastructures").val();
-            if (infrastructures_text.length > 0) {
-                var infrastructure_names = infrastructures_text.split(",");
-                for (var i = 0; i < infrastructure_names.length; i++) {
-                    infrastructures.push({"id": infrastructure_names[i]});
-                }
+            var infrastructure_names = $("#infrastructures").val();
+            for (var i = 0; i < infrastructure_names.length; i++) {
+                infrastructures.push({"id": infrastructure_names[i]});
             }
             return infrastructures;
         }
@@ -134,9 +161,9 @@
     <table>
         <tr><td>Name:</td><td><input type="text" id="name"/> (auto-generated on create)</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
-        <tr><td>Organization:</td><td><input type="text" id="organization"/> *</td></tr>
-        <tr><td>Metadata Collection:</td><td><input type="text" id="metadata_collection"/> *</td></tr>
-        <tr><td>Infrastructures:</td><td><input type="text" id="infrastructures"/> (comma-separated list)</td></tr>
+        <tr><td>Organization:</td><td><select id="organization"><option value="">(None)</option></select> *</td></tr>
+        <tr><td>Metadata Collection:</td><td><select id="metadata_collection"><option value="">(None)</option></select> *</td></tr>
+        <tr><td>Infrastructures:</td><td><select multiple id="infrastructures"></select> (select zero or more)</td></tr>
         <tr><td>Schema Name:</td><td><input type="text" id="schema_name"/> *</td></tr>
         <tr><td>Schema Version:</td><td><input type="text" id="schema_version"/></td></tr>
         <tr><td>Metadata JSON:</td><td>
