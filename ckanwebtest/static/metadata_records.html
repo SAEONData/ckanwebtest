@@ -68,9 +68,9 @@
                     "infrastructures": get_infrastructures(),
                     "schema_name": $("#schema_name").val(),
                     "schema_version": $("#schema_version").val(),
-                    "content_json": $("#metadata_json").val(),
-                    "content_raw": "",
-                    "content_url": "",
+                    "metadata_json": $("#metadata_json").val(),
+                    "metadata_raw": "",
+                    "metadata_url": "",
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -96,9 +96,9 @@
                     "infrastructures": get_infrastructures(),
                     "schema_name": $("#schema_name").val(),
                     "schema_version": $("#schema_version").val(),
-                    "content_json": $("#metadata_json").val(),
-                    "content_raw": "",
-                    "content_url": "",
+                    "metadata_json": $("#metadata_json").val(),
+                    "metadata_raw": "",
+                    "metadata_url": "",
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
