@@ -6,6 +6,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
+        function load_lookup(url, select) {
+            $.ajax({
+                url: url,
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: "{}",
+                success: function (result) {
+                    for(var i = 0; i < result.length; i++) {
+                        var opt = result[i];
+                        var el = document.createElement("option");
+                        el.textContent = opt;
+                        el.value = opt;
+                        select.appendChild(el);
+                    }
+                },
+                error: function (call, state, msg) {
+                    select.firstChild.textContent = "Error loading objects";
+                }
+            });
+        }
+
+        function load_lookups() {
+            load_lookup("/action/metadata_schema_list", document.getElementById("metadata_schema"));
+            load_lookup("/action/organization_list", document.getElementById("organization"));
+            load_lookup("/action/infrastructure_list", document.getElementById("infrastructure"));
+        }
+
+        window.onload = load_lookups;
+
         function list_() {
             $("#response").val("Loading metadata model list...");
             $.ajax({
@@ -97,9 +127,9 @@
     <table>
         <tr><td>Name:</td><td><input type="text" id="name"/> (auto-generated on create)</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
-        <tr><td>Metadata Schema:</td><td><input type="text" id="metadata_schema"/> *</td></tr>
-        <tr><td>Organization:</td><td><input type="text" id="organization"/></td></tr>
-        <tr><td>Infrastructure:</td><td><input type="text" id="infrastructure"/></td></tr>
+        <tr><td>Metadata Schema:</td><td><select id="metadata_schema"><option value="">(None)</option></select> *</td></tr>
+        <tr><td>Organization:</td><td><select id="organization"><option value="">(None)</option></select></td></tr>
+        <tr><td>Infrastructure:</td><td><select id="infrastructure"><option value="">(None)</option></select></td></tr>
         <tr><td>Model JSON:</td><td><textarea id="model_json" style="width: 800px; height: 400px"></textarea></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>

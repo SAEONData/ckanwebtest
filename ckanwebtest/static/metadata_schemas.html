@@ -6,6 +6,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
+        function load_lookups() {
+            var select = document.getElementById("base_schema");
+
+            $.ajax({
+                url: "/action/metadata_schema_list",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: "{}",
+                success: function (result) {
+                    for(var i = 0; i < result.length; i++) {
+                        var opt = result[i];
+                        var el = document.createElement("option");
+                        el.textContent = opt;
+                        el.value = opt;
+                        select.appendChild(el);
+                    }
+                },
+                error: function (call, state, msg) {
+                    select.firstChild.textContent = "Error loading metadata schemas";
+                }
+            });
+        }
+        window.onload = load_lookups;
+
         function list_() {
             $("#response").val("Loading metadata schema list...");
             $.ajax({
@@ -100,7 +125,7 @@
         <tr><td>Schema Name:</td><td><input type="text" id="schema_name"/> *</td></tr>
         <tr><td>Schema Version:</td><td><input type="text" id="schema_version"/></td></tr>
         <tr><td>Schema XSD:</td><td><textarea id="schema_xsd" style="width: 800px; height: 200px"></textarea></td></tr>
-        <tr><td>Base Schema:</td><td><input type="text" id="base_schema"/></td></tr>
+        <tr><td>Base Schema:</td><td><select id="base_schema"><option value="">(None)</option></select></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
             <input type="checkbox" id="all_fields"/> All fields

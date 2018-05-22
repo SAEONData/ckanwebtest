@@ -6,6 +6,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
+        function load_lookups() {
+            var select = document.getElementById("organization");
+
+            $.ajax({
+                url: "/action/organization_list",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: "{}",
+                success: function (result) {
+                    for(var i = 0; i < result.length; i++) {
+                        var opt = result[i];
+                        var el = document.createElement("option");
+                        el.textContent = opt;
+                        el.value = opt;
+                        select.appendChild(el);
+                    }
+                },
+                error: function (call, state, msg) {
+                    select.firstChild.textContent = "Error loading organizations";
+                }
+            });
+        }
+        window.onload = load_lookups;
+
         function list_() {
             $("#response").val("Loading metadata collection list...");
             $.ajax({
@@ -91,7 +116,7 @@
     <table>
         <tr><td>Name:</td><td><input type="text" id="name"/> *</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
-        <tr><td>Organization:</td><td><input type="text" id="organization"/> *</td></tr>
+        <tr><td>Organization:</td><td><select id="organization"><option value="">(None)</option></select> *</td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
             <input type="checkbox" id="all_fields"/> All fields
