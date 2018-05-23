@@ -32,6 +32,7 @@
             load_lookup("/action/organization_list", document.getElementById("organization"));
             load_lookup("/action/infrastructure_list", document.getElementById("infrastructures"));
             load_lookup("/action/metadata_collection_list", document.getElementById("metadata_collection"));
+            load_lookup("/action/metadata_schema_list", document.getElementById("metadata_schema"));
         }
 
         window.onload = load_lookups;
@@ -93,8 +94,7 @@
                     "owner_org": $("#organization").val(),
                     "metadata_collection_id": $("#metadata_collection").val(),
                     "infrastructures": get_infrastructures(),
-                    "schema_name": $("#schema_name").val(),
-                    "schema_version": $("#schema_version").val(),
+                    "metadata_schema_id": $("#metadata_schema").val(),
                     "metadata_json": $("#metadata_json").val(),
                     "metadata_raw": "",
                     "metadata_url": "",
@@ -121,8 +121,7 @@
                     "owner_org": $("#organization").val(),
                     "metadata_collection_id": $("#metadata_collection").val(),
                     "infrastructures": get_infrastructures(),
-                    "schema_name": $("#schema_name").val(),
-                    "schema_version": $("#schema_version").val(),
+                    "metadata_schema_id": $("#metadata_schema").val(),
                     "metadata_json": $("#metadata_json").val(),
                     "metadata_raw": "",
                     "metadata_url": "",
@@ -164,8 +163,7 @@
         <tr><td>Organization:</td><td><select id="organization"><option value="">(None)</option></select> *</td></tr>
         <tr><td>Metadata Collection:</td><td><select id="metadata_collection"><option value="">(None)</option></select> *</td></tr>
         <tr><td>Infrastructures:</td><td><select multiple id="infrastructures"></select> (select zero or more)</td></tr>
-        <tr><td>Schema Name:</td><td><input type="text" id="schema_name"/> *</td></tr>
-        <tr><td>Schema Version:</td><td><input type="text" id="schema_version"/></td></tr>
+        <tr><td>Metadata Schema:</td><td><select id="metadata_schema"><option value="">(None)</option></select> *</td></tr>
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
         </td></tr>
