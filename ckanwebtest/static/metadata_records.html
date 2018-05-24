@@ -33,6 +33,8 @@
             load_lookup("/action/infrastructure_list", document.getElementById("infrastructures"));
             load_lookup("/action/metadata_collection_list", document.getElementById("metadata_collection"));
             load_lookup("/action/metadata_schema_list", document.getElementById("metadata_schema"));
+            load_lookup("/action/metadata_collection_list", document.getElementById("metadata_collection_filter"));
+            load_lookup("/action/metadata_record_list", document.getElementById("metadata_record_filter"));
         }
 
         window.onload = load_lookups;
@@ -44,7 +46,11 @@
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
-                data: "{}",
+                data: JSON.stringify({
+                    "all_fields": $("#all_fields").prop("checked"),
+                    "ids": $("#metadata_record_filter").val(),
+                    "metadata_collection_id": $("#metadata_collection_filter").val(),
+                }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
                 },
@@ -54,7 +60,7 @@
             });
         }
 
-        function show() {
+        function view() {
             $("#response").val("Fetching metadata record...");
             $.ajax({
                 url: "/action/metadata_record_show",
@@ -156,7 +162,7 @@
     </script>
 </head>
 <body>
-    <b>Configure Metadata Records</b>
+    <b>Manage Metadata Records</b>
     <table>
         <tr><td>Name:</td><td><input type="text" id="name"/> (auto-generated on create)</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
@@ -168,11 +174,18 @@
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
         </td></tr>
         <tr><td>Submit:</td><td>
-            <input type="button" value="List All" onclick="list_();"/>
-            <input type="button" value="Show" onclick="show();"/>
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>
+            <input type="button" value="View" onclick="view();"/>
+        </td></tr>
+        <tr><td></td><td>
+            <input type="button" value="List All" onclick="list_();"/>
+            <input type="checkbox" id="all_fields"/> All fields
+            <select id="metadata_collection_filter"><option value="">Filter by Collection</option></select>
+        </td></tr>
+        <tr><td></td><td>
+            <select multiple id="metadata_record_filter"></select> Filter by ID(s)
         </td></tr>
         <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 600px"></textarea></td></tr>
     </table>
