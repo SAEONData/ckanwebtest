@@ -33,6 +33,8 @@
             load_lookup("/action/infrastructure_list", document.getElementById("infrastructures"));
             load_lookup("/action/metadata_collection_list", document.getElementById("metadata_collection"));
             load_lookup("/action/metadata_schema_list", document.getElementById("metadata_schema"));
+            load_lookup("/action/organization_list", document.getElementById("organization_filter"));
+            load_lookup("/action/infrastructure_list", document.getElementById("infrastructure_filter"));
             load_lookup("/action/metadata_collection_list", document.getElementById("metadata_collection_filter"));
             load_lookup("/action/metadata_record_list", document.getElementById("metadata_record_filter"));
         }
@@ -49,6 +51,8 @@
                 data: JSON.stringify({
                     "all_fields": $("#all_fields").prop("checked"),
                     "ids": $("#metadata_record_filter").val(),
+                    "owner_org": $("#organization_filter").val(),
+                    "infrastructure_id": $("#infrastructure_filter").val(),
                     "metadata_collection_id": $("#metadata_collection_filter").val(),
                 }),
                 success: function (result) {
@@ -182,6 +186,8 @@
         <tr><td></td><td>
             <input type="button" value="List All" onclick="list_();"/>
             <input type="checkbox" id="all_fields"/> All fields
+            <select id="organization_filter"><option value="">Filter by Organization</option></select>
+            <select id="infrastructure_filter"><option value="">Filter by Infrastructure</option></select>
             <select id="metadata_collection_filter"><option value="">Filter by Collection</option></select>
         </td></tr>
         <tr><td></td><td>
