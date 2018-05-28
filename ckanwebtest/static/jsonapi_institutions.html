@@ -7,19 +7,17 @@
     <script type="text/javascript">
 
         function list_() {
-            var url = "JSONAPI_URL/Institutions/jsonContent";
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var url = "JSONAPI_URL/Institutions/jsonContent?types=Institution" +
+                "&__ac_name=" + username + "&__ac_password=" + password;
 
             $("#response").val("Loading institution list...");
             $.ajax({
                 url: url,
-                method: "POST",
-                contentType: "application/json",
+                method: "GET",
+                contentType: "text/plain",
                 dataType: "json",
-                data: JSON.stringify({
-                    "__ac_name": $("#username").val(),
-                    "__ac_password": $("#password").val(),
-                    "types": "Institution",
-                }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
                 },
