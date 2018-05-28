@@ -44,11 +44,17 @@ class Application:
         return INDEX_HTML
 
     @cherrypy.expose
-    def jsonapi_metadata(self):
+    def jsonapi_metadata_create(self):
         jsonapi_url = cherrypy.config['jsonapi.url']
-        return JSONAPI_METADATA_HTML \
+        return JSONAPI_METADATA_CREATE_HTML \
             .replace('JSONAPI_URL', jsonapi_url) \
             .replace('SAMPLE_METADATA_JSON', SAMPLE_METADATA_JSON)
+
+    @cherrypy.expose
+    def jsonapi_metadata_list(self):
+        jsonapi_url = cherrypy.config['jsonapi.url']
+        return JSONAPI_METADATA_LIST_HTML \
+            .replace('JSONAPI_URL', jsonapi_url)
 
     @cherrypy.expose
     def jsonapi_institutions(self):

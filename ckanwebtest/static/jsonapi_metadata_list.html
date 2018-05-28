@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON API - Retrieve Metadata</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function submit() {
+            var institution = $("#institution").val();
+            var repository = $("#repository").val();
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var url = "JSONAPI_URL/Institutions/" + institution + "/" + repository + "/metadata/jsonContent?types=Metadata" +
+                "&__ac_name=" + username + "&__ac_password=" + password;
+
+            $("#response").val("Loading metadata records...");
+            $.ajax({
+                url: url,
+                method: "GET",
+                contentType: "text/plain",
+                dataType: "json",
+                success: function (result) {
+                    $("#response").val(JSON.stringify(result, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <b>Retrieve Metadata</b>
+    <table>
+        <tr><td>Institution:</td><td><input type="text" id="institution"/> *</td></tr>
+        <tr><td>Repository:</td><td><input type="text" id="repository"/> *</td></tr>
+        <tr><td>Username:</td><td><input type="text" id="username"/></td></tr>
+        <tr><td>Password:</td><td><input type="text" id="password"/></td></tr>
+        <tr><td>Submit:</td><td>
+            <input type="button" value="Submit" onclick="submit();"/>
+        </td></tr>
+        <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 600px"></textarea></td></tr>
+    </table>
+</body>
+</html>

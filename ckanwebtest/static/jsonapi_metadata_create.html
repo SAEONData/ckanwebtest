@@ -11,7 +11,7 @@
             var repository = $("#repository").val();
             var url = "JSONAPI_URL/Institutions/" + institution + "/" + repository + "/metadata/jsonCreateMetadataAsJson";
 
-            $("#response").val("Loading...");
+            $("#response").val("Creating metadata record...");
             $.ajax({
                 url: url,
                 method: "POST",
