@@ -15,6 +15,8 @@ setup(
         'cherrypy',
         'ckanapi',
         'requests',
+        'requests-oauthlib',
+        'oauthlib',
     ],
     python_requires='~=3.5',
 )
