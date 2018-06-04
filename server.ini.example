@@ -17,3 +17,4 @@ auth.token_url: ''
 auth.client_id: ''
 auth.client_secret: ''
 auth.scopes: ['openid', 'SAEON.CKAN.API']
+auth.insecure_transport: False

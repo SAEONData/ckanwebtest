@@ -189,6 +189,10 @@ class Application:
 
 if __name__ == "__main__":
     cherrypy.config.update(CONFIG_FILE)
+    if cherrypy.config.get('auth.insecure_transport'):
+        import os
+        os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
     cherrypy.tree.mount(Application(), '/', config={'/': {'tools.sessions.on': True}})
     cherrypy.tree.mount(Action(), '/action', config={'/': {'tools.sessions.on': True,
                                                            'tools.trailing_slash.on': False}})
