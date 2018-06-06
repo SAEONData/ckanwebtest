@@ -1,5 +1,7 @@
 import pkg_resources
 
+__version__ = pkg_resources.require('ckanwebtest')[0].version
+
 
 def _static_content(filename):
     return pkg_resources.resource_string(__name__, 'static/' + filename).decode('utf-8')

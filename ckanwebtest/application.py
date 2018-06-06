@@ -5,6 +5,7 @@ from requests_oauthlib import OAuth2Session
 from urllib.parse import urljoin
 from oauthlib.oauth2 import OAuth2Error
 
+from ckanwebtest import __version__
 from ckanwebtest import *
 from ckanapi import RemoteCKAN
 
@@ -113,6 +114,7 @@ class Application:
             login_hidden = ''
 
         return INDEX_HTML \
+            .replace('VERSION', __version__) \
             .replace('LOGIN_MESSAGE', login_msg) \
             .replace('LOGIN_HIDDEN', login_hidden)
 
