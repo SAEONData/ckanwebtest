@@ -9,10 +9,15 @@ ckan.url: ''
 ; URL of the JSONAPI Facade service
 jsonapi.url: ''
 
-; Auth config
+; OAuth2 config
 auth.authorization_url: ''
 auth.token_url: ''
 auth.client_id: ''
 auth.client_secret: ''
 auth.scopes: ['openid', 'SAEON.CKAN.API']
 auth.insecure_transport: False
+
+; CKAN user API key
+; Note: setting this option will cause the associated CKAN account to be used
+; for all operations, and will bypass OAuth2 authentication and authorization
+ckan.apikey: ''

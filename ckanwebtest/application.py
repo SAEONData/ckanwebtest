@@ -9,6 +9,8 @@ from ckanapi import RemoteCKAN
 from ckanwebtest import __version__
 from ckanwebtest import *
 
+_ckan_apikey = None
+
 
 def authorize(func):
     """
@@ -16,7 +18,7 @@ def authorize(func):
     executing the decorated function.
     """
     def wrapper(*args, **kwargs):
-        if not logged_in():
+        if not _ckan_apikey and not logged_in():
             raise cherrypy.HTTPRedirect('/auth/login')
         return func(*args, **kwargs)
 
@@ -29,7 +31,7 @@ def authorized(func):
     is already authorized.
     """
     def wrapper(*args, **kwargs):
-        if not logged_in():
+        if not _ckan_apikey and not logged_in():
             raise cherrypy.HTTPError(403)
         return func(*args, **kwargs)
 
@@ -92,11 +94,11 @@ class Action:
     @cherrypy.tools.json_out()
     @authorized
     def index(self, action_name):
-        oauth2session = OAuth2Session(client_id=self.client_id, token=cherrypy.session['oauth2_token'])
+        session = OAuth2Session(client_id=self.client_id, token=cherrypy.session['oauth2_token']) if not _ckan_apikey else None
         data = cherrypy.request.json
         get_only = action_name.endswith(('_list', '_show'))
 
-        with RemoteCKAN(self.ckan_url, session=oauth2session, get_only=get_only) as ckan:
+        with RemoteCKAN(self.ckan_url, session=session, get_only=get_only, apikey=_ckan_apikey) as ckan:
             try:
                 return ckan.call_action(action_name, data_dict=data)
 
@@ -122,7 +124,10 @@ class Application:
 
     @cherrypy.expose
     def index(self):
-        if logged_in():
+        if _ckan_apikey:
+            login_msg = 'Using CKAN API key.'
+            login_hidden = 'hidden'
+        elif logged_in():
             login_msg = 'You are logged in.'
             login_hidden = 'hidden'
         elif login_error():
@@ -213,6 +218,8 @@ if __name__ == "__main__":
     if cherrypy.config.get('auth.insecure_transport'):
         import os
         os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
+    _ckan_apikey = cherrypy.config.get('ckan.apikey')
 
     cherrypy.tree.mount(Application(), '/', config={'/': {'tools.sessions.on': True}})
 
