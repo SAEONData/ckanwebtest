@@ -37,6 +37,7 @@
             load_lookup("/action/infrastructure_list", document.getElementById("infrastructure_filter"));
             load_lookup("/action/metadata_collection_list", document.getElementById("metadata_collection_filter"));
             load_lookup("/action/metadata_record_list", document.getElementById("metadata_record_filter"));
+            load_lookup("/action/metadata_model_list", document.getElementById("metadata_model"));
         }
 
         window.onload = load_lookups;
@@ -163,6 +164,45 @@
                 }
             });
         }
+
+        function check_validity() {
+            $("#response").val("Checking validity of metadata...");
+            $.ajax({
+                url: "/action/metadata_validity_check",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "model_json": $("#model_json").val(),
+                    "metadata_json": $("#metadata_json").val(),
+                }),
+                success: function (result) {
+                    $("#response").val(JSON.stringify(result, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function load_metadata_model() {
+            $("#model_json").val("Loading metadata model JSON...");
+            $.ajax({
+                url: "/action/metadata_model_show",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "id": $("#metadata_model").val(),
+                }),
+                success: function (result) {
+                    $("#model_json").val(JSON.stringify(result.model_json, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#model_json").val(msg);
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -176,13 +216,18 @@
         <tr><td>Metadata Schema:</td><td><select id="metadata_schema"><option value="">(None)</option></select> *</td></tr>
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
+        </td><td>
+            <textarea id="model_json" style="width: 800px; height: 400px"></textarea>
         </td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>
             <input type="button" value="View" onclick="view();"/>
-        </td></tr>
+            </td><td>
+                <select id="metadata_model" onchange="load_metadata_model();"><option value="">Load Metadata Model</option></select>
+                <input type="button" value="Check Validity" onclick="check_validity();"/>
+            </td></tr>
         <tr><td></td><td>
             <input type="button" value="List All" onclick="list_();"/>
             <input type="checkbox" id="all_fields"/> All fields
