@@ -212,6 +212,11 @@ class Application:
     def workflow_rules(self):
         return WORKFLOW_RULES_HTML
 
+    @cherrypy.expose
+    @authorize
+    def vocabularies(self):
+        return VOCABULARIES_HTML
+
 
 if __name__ == "__main__":
     cherrypy.config.update(CONFIG_FILE)
