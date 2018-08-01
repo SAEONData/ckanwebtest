@@ -194,6 +194,11 @@ class Application:
 
     @cherrypy.expose
     @authorize
+    def metadata_workflow(self):
+        return METADATA_WORKFLOW_HTML
+
+    @cherrypy.expose
+    @authorize
     def workflow_states(self):
         return WORKFLOW_STATES_HTML
 
@@ -201,16 +206,6 @@ class Application:
     @authorize
     def workflow_transitions(self):
         return WORKFLOW_TRANSITIONS_HTML
-
-    @cherrypy.expose
-    @authorize
-    def workflow_metrics(self):
-        return WORKFLOW_METRICS_HTML
-
-    @cherrypy.expose
-    @authorize
-    def workflow_rules(self):
-        return WORKFLOW_RULES_HTML
 
     @cherrypy.expose
     @authorize

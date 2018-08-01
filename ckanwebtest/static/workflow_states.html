@@ -60,6 +60,8 @@
                 data: JSON.stringify({
                     "name": $("#name").val(),
                     "title": $("#title").val(),
+                    "workflow_rules_json": $("#workflow_rules_json").val(),
+                    "metadata_records_private": $("#private").prop("checked"),
                     "revert_state_id": $("#revert_state").val(),
                 }),
                 success: function (result) {
@@ -81,6 +83,8 @@
                 data: JSON.stringify({
                     "id": $("#name").val(),
                     "title": $("#title").val(),
+                    "workflow_rules_json": $("#workflow_rules_json").val(),
+                    "metadata_records_private": $("#private").prop("checked"),
                     "revert_state_id": $("#revert_state").val(),
                 }),
                 success: function (result) {
@@ -117,6 +121,8 @@
     <table>
         <tr><td>Name:</td><td><input type="text" id="name"/> *</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
+        <tr><td>Private:</td><td><input type="checkbox" id="private"/> (are metadata records in this state private?)</td></tr>
+        <tr><td>Workflow Rules JSON:</td><td><textarea id="workflow_rules_json" style="width: 800px; height: 400px"></textarea></td></tr>
         <tr><td>Revert State:</td><td><select id="revert_state"><option value="">(None)</option></select></td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>

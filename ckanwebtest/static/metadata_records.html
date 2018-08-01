@@ -165,6 +165,44 @@
             });
         }
 
+        function validate() {
+            $("#response").val("Validating metadata record...");
+            $.ajax({
+                url: "/action/metadata_record_validate",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "id": $("#name").val(),
+                }),
+                success: function (result) {
+                    $("#response").val(JSON.stringify(result, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function invalidate() {
+            $("#response").val("Invalidating metadata record...");
+            $.ajax({
+                url: "/action/metadata_record_invalidate",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "id": $("#name").val(),
+                }),
+                success: function (result) {
+                    $("#response").val(JSON.stringify(result, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
         function check_validity() {
             $("#response").val("Checking validity of metadata...");
             $.ajax({
@@ -224,6 +262,8 @@
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>
             <input type="button" value="View" onclick="view();"/>
+            <input type="button" value="Validate" onclick="validate();"/>
+            <input type="button" value="Invalidate" onclick="invalidate();"/>
             </td><td>
                 <select id="metadata_model" onchange="load_metadata_model();"><option value="">Load Metadata Model</option></select>
                 <input type="button" value="Check Validity" onclick="check_validity();"/>

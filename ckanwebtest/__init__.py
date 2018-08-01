@@ -17,11 +17,10 @@ METADATA_COLLECTIONS_HTML = _static_content('metadata_collections.html')
 METADATA_SCHEMAS_HTML = _static_content('metadata_schemas.html')
 METADATA_MODELS_HTML = _static_content('metadata_models.html')
 METADATA_RECORDS_HTML = _static_content('metadata_records.html')
+METADATA_WORKFLOW_HTML = _static_content('metadata_workflow.html')
 
 WORKFLOW_STATES_HTML = _static_content('workflow_states.html')
 WORKFLOW_TRANSITIONS_HTML = _static_content('workflow_transitions.html')
-WORKFLOW_METRICS_HTML = _static_content('workflow_metrics.html')
-WORKFLOW_RULES_HTML = _static_content('workflow_rules.html')
 
 VOCABULARIES_HTML = _static_content('vocabularies.html')
 
