@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Metadata Records</title>
+    <title>Metadata Workflow</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
 
@@ -75,7 +75,7 @@
         function load_record() {
             $("#metadata_record_json").val("Loading metadata record...");
             $.ajax({
-                url: "/action/metadata_record_show",
+                url: "/action/metadata_record_workflow_augmented_show",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
@@ -94,12 +94,12 @@
         function list_annotations() {
             $("#response").val("Loading workflow annotation list...");
             $.ajax({
-                url: "/action/workflow_annotation_list",
+                url: "/action/metadata_record_workflow_annotation_list",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "metadata_record_id": $("#metadata_record_list").val(),
+                    "id": $("#metadata_record_list").val(),
                     "all_fields": true,
                 }),
                 success: function (result) {
@@ -114,13 +114,14 @@
         function add_annotation() {
             $("#response").val("Creating workflow annotation...");
             $.ajax({
-                url: "/action/workflow_annotation_create",
+                url: "/action/metadata_record_workflow_annotation_create",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "metadata_record_id": $("#metadata_record_list").val(),
-                    "workflow_annotation_json": $("#workflow_annotation_json").val(),
+                    "id": $("#metadata_record_list").val(),
+                    "path": $("#workflow_annotation_path").val(),
+                    "value": $("#workflow_annotation_json").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -141,6 +142,25 @@
                 data: JSON.stringify({
                     "id": $("#metadata_record_list").val(),
                     "workflow_state_id": $("#workflow_state").val(),
+                }),
+                success: function (result) {
+                    $("#response").val(JSON.stringify(result, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function revert() {
+            $("#response").val("Reverting workflow state...");
+            $.ajax({
+                url: "/action/metadata_record_workflow_state_revert",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "id": $("#metadata_record_list").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -179,7 +199,6 @@
                 dataType: "json",
                 data: JSON.stringify({
                     "metadata_record_json": $("#metadata_record_json").val(),
-                    "workflow_annotation_list": [{"json": $("#workflow_annotation_json").val()}],
                     "workflow_rules_json": $("#workflow_rules_json").val(),
                 }),
                 success: function (result) {
@@ -190,38 +209,67 @@
                 }
             });
         }
+
+        function set_transition_button() {
+            document.getElementById("transition_to").value = "Transition to '" + $("#workflow_state").val() + "'";
+        }
+
     </script>
 </head>
 <body>
     <b>Manage Metadata Workflow</b>
     <table>
-        <tr><td>Find Records:</td><td>
-            <select id="organization_filter" onchange="list_records();"><option value="">Filter by Organization</option></select>
-            <select id="infrastructure_filter" onchange="list_records();"><option value="">Filter by Infrastructure</option></select>
-            <select id="metadata_collection_filter" onchange="list_records();"><option value="">Filter by Collection</option></select>
-        </td></tr>
-        <tr><td></td><td>
-            <select id="metadata_record_list"></select>
-            <input type="button" value="Load Record" onclick="load_record();"/>
-        </td></tr>
-        <tr><td>Metadata Record JSON:</td><td>
-            <textarea id="metadata_record_json" style="width: 800px; height: 400px"></textarea>
-        </td></tr>
-        <tr><td>Workflow Annotation JSON:</td><td>
-            <textarea id="workflow_annotation_json" style="width: 800px; height: 400px"></textarea>
-        </td><td>
-            <textarea id="workflow_rules_json" style="width: 800px; height: 400px"></textarea>
-        </td></tr>
-        <tr><td>Submit:</td><td>
-            <input type="button" value="List Annotations" onclick="list_annotations();"/>
-            <input type="button" value="Add Annotation" onclick="add_annotation();"/>
-            <input type="button" value="Transition To" onclick="transition();"/>
-            <select id="workflow_state"><option value="">Select Workflow State</option></select>
+        <tr><td>Find Records:</td>
+            <td>
+                <select id="organization_filter" onchange="list_records();"><option value="">Filter by Organization</option></select>
+                <select id="infrastructure_filter" onchange="list_records();"><option value="">Filter by Infrastructure</option></select>
+                <select id="metadata_collection_filter" onchange="list_records();"><option value="">Filter by Collection</option></select>
+            </td>
+        </tr>
+        <tr><td></td>
+            <td>
+                <select id="metadata_record_list"></select>
+                <input type="button" value="Load Augmented Record" onclick="load_record();"/>
             </td><td>
+                <select id="workflow_state" onchange="set_transition_button();"><option value="">Select Workflow State</option></select>
                 <input type="button" value="Load Rules" onclick="load_rules();"/>
                 <input type="button" value="Check Validity" onclick="check_validity();"/>
-            </td></tr>
-        <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 600px"></textarea></td></tr>
+            </td>
+        </tr>
+        <tr><td>Augmented Metadata Record JSON:</td>
+            <td>
+                <textarea id="metadata_record_json" style="width: 800px; height: 400px"></textarea>
+            </td><td>
+                <textarea id="workflow_rules_json" style="width: 600px; height: 400px"></textarea>
+            </td>
+        </tr>
+        <tr><td>Workflow Annotation Path:</td>
+            <td>
+                <input type="text" id="workflow_annotation_path" style="width: 800px"/>
+            </td><td>
+                (JSON pointer into augmented metadata record dict)
+            </td>
+        </tr>
+        <tr><td>Workflow Annotation JSON:</td>
+            <td>
+                <textarea id="workflow_annotation_json" style="width: 800px; height: 200px"></textarea>
+            </td><td>
+                (JSON snippet to set at the above path)
+            </td>
+        </tr>
+        <tr><td>Submit:</td>
+            <td>
+                <input type="button" value="List Annotations" onclick="list_annotations();"/>
+                <input type="button" value="Add Annotation" onclick="add_annotation();"/>
+                <input type="button" value="Transition to" onclick="transition();" id="transition_to"/>
+                <input type="button" value="Revert" onclick="revert();"/>
+            </td>
+        </tr>
+        <tr><td>Response:</td>
+            <td>
+                <textarea readonly id="response" style="width: 800px; height: 600px"></textarea>
+            </td>
+        </tr>
     </table>
 </body>
 </html>
