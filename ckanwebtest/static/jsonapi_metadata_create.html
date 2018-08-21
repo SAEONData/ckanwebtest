@@ -20,7 +20,7 @@
                 data: JSON.stringify({
                     "__ac_name": $("#username").val(),
                     "__ac_password": $("#password").val(),
-                    "metadataType": $("#metadata_schema").val(),
+                    "metadataType": $("#metadata_standard").val(),
                     "jsonData": $("#metadata_json").val(),
                 }),
                 success: function (result) {
@@ -38,7 +38,7 @@
     <table>
         <tr><td>Institution:</td><td><input type="text" id="institution"/> *</td></tr>
         <tr><td>Repository:</td><td><input type="text" id="repository"/> *</td></tr>
-        <tr><td>Metadata Schema:</td><td><input type="text" id="metadata_schema"/> *</td></tr>
+        <tr><td>Metadata Standard:</td><td><input type="text" id="metadata_standard"/> *</td></tr>
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
         </td></tr>

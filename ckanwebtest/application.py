@@ -178,8 +178,8 @@ class Application:
 
     @cherrypy.expose
     @authorize
-    def metadata_schemas(self):
-        return METADATA_SCHEMAS_HTML
+    def metadata_standards(self):
+        return METADATA_STANDARDS_HTML
 
     @cherrypy.expose
     @authorize

@@ -29,7 +29,7 @@
         }
 
         function load_lookups() {
-            load_lookup("/action/metadata_schema_list", document.getElementById("metadata_schema"));
+            load_lookup("/action/metadata_standard_list", document.getElementById("metadata_standard"));
             load_lookup("/action/organization_list", document.getElementById("organization"));
             load_lookup("/action/infrastructure_list", document.getElementById("infrastructure"));
         }
@@ -64,7 +64,7 @@
                 dataType: "json",
                 data: JSON.stringify({
                     "title": $("#title").val(),
-                    "metadata_schema_id": $("#metadata_schema").val(),
+                    "metadata_standard_id": $("#metadata_standard").val(),
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
                     "model_json": $("#model_json").val(),
@@ -88,7 +88,7 @@
                 data: JSON.stringify({
                     "id": $("#name").val(),
                     "title": $("#title").val(),
-                    "metadata_schema_id": $("#metadata_schema").val(),
+                    "metadata_standard_id": $("#metadata_standard").val(),
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
                     "model_json": $("#model_json").val(),
@@ -127,7 +127,7 @@
     <table>
         <tr><td>Name:</td><td><input type="text" id="name"/> (auto-generated on create)</td></tr>
         <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
-        <tr><td>Metadata Schema:</td><td><select id="metadata_schema"><option value="">(None)</option></select> *</td></tr>
+        <tr><td>Metadata Standard:</td><td><select id="metadata_standard"><option value="">(None)</option></select> *</td></tr>
         <tr><td>Organization:</td><td><select id="organization"><option value="">(None)</option></select></td></tr>
         <tr><td>Infrastructure:</td><td><select id="infrastructure"><option value="">(None)</option></select></td></tr>
         <tr><td>Model JSON:</td><td><textarea id="model_json" style="width: 800px; height: 400px"></textarea></td></tr>
