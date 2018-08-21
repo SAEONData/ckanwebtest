@@ -179,7 +179,8 @@ class Application:
     @cherrypy.expose
     @authorize
     def metadata_standards(self):
-        return METADATA_STANDARDS_HTML
+        return METADATA_STANDARDS_HTML \
+            .replace('SAMPLE_METADATA_JSON', SAMPLE_METADATA_JSON)
 
     @cherrypy.expose
     @authorize
