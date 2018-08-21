@@ -37,7 +37,7 @@
             load_lookup("/action/infrastructure_list", document.getElementById("infrastructure_filter"));
             load_lookup("/action/metadata_collection_list", document.getElementById("metadata_collection_filter"));
             load_lookup("/action/metadata_record_list", document.getElementById("metadata_record_filter"));
-            load_lookup("/action/metadata_model_list", document.getElementById("metadata_model"));
+            load_lookup("/action/metadata_schema_list", document.getElementById("metadata_schema"));
         }
 
         window.onload = load_lookups;
@@ -211,7 +211,7 @@
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "model_json": $("#model_json").val(),
+                    "schema_json": $("#schema_json").val(),
                     "metadata_json": $("#metadata_json").val(),
                 }),
                 success: function (result) {
@@ -223,21 +223,21 @@
             });
         }
 
-        function load_metadata_model() {
-            $("#model_json").val("Loading metadata model JSON...");
+        function load_metadata_schema() {
+            $("#schema_json").val("Loading metadata schema JSON...");
             $.ajax({
-                url: "/action/metadata_model_show",
+                url: "/action/metadata_schema_show",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "id": $("#metadata_model").val(),
+                    "id": $("#metadata_schema").val(),
                 }),
                 success: function (result) {
-                    $("#model_json").val(JSON.stringify(result.model_json, null, 4));
+                    $("#schema_json").val(JSON.stringify(result.schema_json, null, 4));
                 },
                 error: function (call, state, msg) {
-                    $("#model_json").val(msg);
+                    $("#schema_json").val(msg);
                 }
             });
         }
@@ -255,7 +255,7 @@
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
         </td><td>
-            <textarea id="model_json" style="width: 800px; height: 400px"></textarea>
+            <textarea id="schema_json" style="width: 800px; height: 400px"></textarea>
         </td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="Create" onclick="create();"/>
@@ -265,7 +265,7 @@
             <input type="button" value="Validate" onclick="validate();"/>
             <input type="button" value="Invalidate" onclick="invalidate();"/>
             </td><td>
-                <select id="metadata_model" onchange="load_metadata_model();"><option value="">Load Metadata Model</option></select>
+                <select id="metadata_schema" onchange="load_metadata_schema();"><option value="">Load Metadata Schema</option></select>
                 <input type="button" value="Check Validity" onclick="check_validity();"/>
             </td></tr>
         <tr><td></td><td>

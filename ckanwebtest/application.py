@@ -183,8 +183,8 @@ class Application:
 
     @cherrypy.expose
     @authorize
-    def metadata_models(self):
-        return METADATA_MODELS_HTML
+    def metadata_schemas(self):
+        return METADATA_SCHEMAS_HTML
 
     @cherrypy.expose
     @authorize

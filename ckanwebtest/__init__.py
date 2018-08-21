@@ -15,7 +15,7 @@ ORGANIZATIONS_HTML = _static_content('organizations.html')
 INFRASTRUCTURES_HTML = _static_content('infrastructures.html')
 METADATA_COLLECTIONS_HTML = _static_content('metadata_collections.html')
 METADATA_STANDARDS_HTML = _static_content('metadata_standards.html')
-METADATA_MODELS_HTML = _static_content('metadata_models.html')
+METADATA_SCHEMAS_HTML = _static_content('metadata_schemas.html')
 METADATA_RECORDS_HTML = _static_content('metadata_records.html')
 METADATA_WORKFLOW_HTML = _static_content('metadata_workflow.html')
 
