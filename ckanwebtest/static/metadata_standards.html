@@ -115,6 +115,26 @@
                 }
             });
         }
+
+        function initialize_index() {
+            $("#response").val("Initializing search index...");
+            $.ajax({
+                url: "/action/metadata_standard_index_create",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "id": $("#name").val(),
+                }),
+                success: function (result) {
+                    $("#response").val(JSON.stringify(result, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
@@ -134,6 +154,7 @@
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Update" onclick="update();"/>
             <input type="button" value="Delete" onclick="delete_();"/>
+            <input type="button" value="Initialize Search Index" onclick="initialize_index();"/>
         </td></tr>
         <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 600px"></textarea></td></tr>
     </table>

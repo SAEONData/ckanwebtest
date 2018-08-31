@@ -203,16 +203,16 @@
             });
         }
 
-        function check_validity() {
-            $("#response").val("Checking validity of metadata...");
+        function validation_schema_list() {
+            $("#response").val("Loading validation schemas for metadata record...");
             $.ajax({
-                url: "/action/metadata_validity_check",
+                url: "/action/metadata_record_validation_schema_list",
                 method: "POST",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "schema_json": $("#schema_json").val(),
-                    "metadata_json": $("#metadata_json").val(),
+                    "id": $("#name").val(),
+                    "all_fields": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -223,24 +223,6 @@
             });
         }
 
-        function load_metadata_schema() {
-            $("#schema_json").val("Loading metadata schema JSON...");
-            $.ajax({
-                url: "/action/metadata_schema_show",
-                method: "POST",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify({
-                    "id": $("#metadata_schema").val(),
-                }),
-                success: function (result) {
-                    $("#schema_json").val(JSON.stringify(result.schema_json, null, 4));
-                },
-                error: function (call, state, msg) {
-                    $("#schema_json").val(msg);
-                }
-            });
-        }
     </script>
 </head>
 <body>
@@ -254,8 +236,6 @@
         <tr><td>Metadata Standard:</td><td><select id="metadata_standard"><option value="">(None)</option></select> *</td></tr>
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
-        </td><td>
-            <textarea id="schema_json" style="width: 800px; height: 400px"></textarea>
         </td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="Create" onclick="create();"/>
@@ -264,10 +244,8 @@
             <input type="button" value="View" onclick="view();"/>
             <input type="button" value="Validate" onclick="validate();"/>
             <input type="button" value="Invalidate" onclick="invalidate();"/>
-            </td><td>
-                <select id="metadata_schema" onchange="load_metadata_schema();"><option value="">Load Metadata Schema</option></select>
-                <input type="button" value="Check Validity" onclick="check_validity();"/>
-            </td></tr>
+            <input type="button" value="List Validation Schemas" onclick="validation_schema_list();"/>
+        </td></tr>
         <tr><td></td><td>
             <input type="button" value="List All" onclick="list_();"/>
             <input type="checkbox" id="all_fields"/> All fields
