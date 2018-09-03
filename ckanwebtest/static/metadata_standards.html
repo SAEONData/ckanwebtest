@@ -62,7 +62,7 @@
                     "standard_name": $("#standard_name").val(),
                     "standard_version": $("#standard_version").val(),
                     "parent_standard_id": $("#parent_standard").val(),
-                    "example_metadata_json": $("#example_metadata_json").val(),
+                    "metadata_template_json": $("#metadata_template_json").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -86,7 +86,7 @@
                     "standard_name": $("#standard_name").val(),
                     "standard_version": $("#standard_version").val(),
                     "parent_standard_id": $("#parent_standard").val(),
-                    "example_metadata_json": $("#example_metadata_json").val(),
+                    "metadata_template_json": $("#metadata_template_json").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -146,7 +146,7 @@
         <tr><td>Standard Version:</td><td><input type="text" id="standard_version"/></td></tr>
         <tr><td>Parent Standard:</td><td><select id="parent_standard"><option value="">(None)</option></select></td></tr>
         <tr><td>Metadata JSON:</td><td>
-            <textarea id="example_metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
+            <textarea id="metadata_template_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
         </td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
