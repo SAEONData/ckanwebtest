@@ -223,6 +223,25 @@
             });
         }
 
+        function index_update() {
+            $("#response").val("Updating search index...");
+            $.ajax({
+                url: "/action/metadata_record_index_update",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "id": $("#name").val(),
+                }),
+                success: function (result) {
+                    $("#response").val(JSON.stringify(result, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
@@ -245,6 +264,7 @@
             <input type="button" value="Validate" onclick="validate();"/>
             <input type="button" value="Invalidate" onclick="invalidate();"/>
             <input type="button" value="List Validation Schemas" onclick="validation_schema_list();"/>
+            <input type="button" value="Update Search Index" onclick="index_update();"/>
         </td></tr>
         <tr><td></td><td>
             <input type="button" value="List All" onclick="list_();"/>
