@@ -10,6 +10,7 @@ from ckanwebtest import __version__
 from ckanwebtest import *
 
 _ckan_apikey = None
+_examples_dir = None
 
 
 def authorize(func):
@@ -44,6 +45,14 @@ def logged_in():
 
 def login_error():
     return cherrypy.session.get('oauth2_error')
+
+
+def load_example(filename):
+    if _examples_dir:
+        with open(_examples_dir + '/' + filename) as f:
+            return f.read()
+    else:
+        return ''
 
 
 class Auth:
@@ -147,7 +156,7 @@ class Application:
     def jsonapi_metadata_create(self):
         return JSONAPI_METADATA_CREATE_HTML \
             .replace('JSONAPI_URL', self.jsonapi_url) \
-            .replace('SAMPLE_METADATA_JSON', SAMPLE_METADATA_JSON)
+            .replace('SAMPLE_METADATA_JSON', load_example('saeon_datacite_record.json'))
 
     @cherrypy.expose
     @authorize
@@ -180,18 +189,19 @@ class Application:
     @authorize
     def metadata_standards(self):
         return METADATA_STANDARDS_HTML \
-            .replace('SAMPLE_METADATA_JSON', SAMPLE_METADATA_JSON)
+            .replace('SAMPLE_METADATA_JSON', load_example('saeon_datacite_record.json'))
 
     @cherrypy.expose
     @authorize
     def metadata_schemas(self):
-        return METADATA_SCHEMAS_HTML
+        return METADATA_SCHEMAS_HTML \
+            .replace('SAMPLE_SCHEMA_JSON', load_example('saeon_datacite_schema.json'))
 
     @cherrypy.expose
     @authorize
     def metadata_records(self):
         return METADATA_RECORDS_HTML \
-            .replace('SAMPLE_METADATA_JSON', SAMPLE_METADATA_JSON)
+            .replace('SAMPLE_METADATA_JSON', load_example('saeon_datacite_record.json'))
 
     @cherrypy.expose
     @authorize
@@ -221,6 +231,7 @@ if __name__ == "__main__":
         os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
     _ckan_apikey = cherrypy.config.get('ckan.apikey')
+    _examples_dir = cherrypy.config.get('ckan.examples_dir')
 
     cherrypy.tree.mount(Application(), '/', config={'/': {'tools.sessions.on': True}})
 

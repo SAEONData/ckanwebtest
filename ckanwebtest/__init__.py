@@ -27,5 +27,3 @@ VOCABULARIES_HTML = _static_content('vocabularies.html')
 JSONAPI_METADATA_CREATE_HTML = _static_content('jsonapi_metadata_create.html')
 JSONAPI_METADATA_LIST_HTML = _static_content('jsonapi_metadata_list.html')
 JSONAPI_INSTITUTIONS_HTML = _static_content('jsonapi_institutions.html')
-
-SAMPLE_METADATA_JSON = _static_content('sample_metadata.json')

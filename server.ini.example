@@ -21,3 +21,7 @@ auth.insecure_transport: False
 ; Note: setting this option will cause the associated CKAN account to be used
 ; for all operations, and will bypass OAuth2 authentication and authorization
 ckan.apikey: ''
+
+; location of example files, e.g. metadata, schemas and workflow state rules
+; (assuming the CKAN server is running on the same machine)
+ckan.examples_dir: '/usr/lib/ckan/default/src/ckanext-metadata/examples'
