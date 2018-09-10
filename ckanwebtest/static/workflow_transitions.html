@@ -43,7 +43,7 @@
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "all_fields": $("#all_fields").prop("checked"),
+                    "all_fields": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -102,7 +102,6 @@
         <tr><td>To State:</td><td><select id="to_state"><option value="">(None)</option></select> *</td></tr>
         <tr><td>Submit:</td><td>
             <input type="button" value="List All" onclick="list_();"/>
-            <input type="checkbox" id="all_fields"/> All fields
             <input type="button" value="Create" onclick="create();"/>
             <input type="button" value="Delete" onclick="delete_();"/>
         </td></tr>
