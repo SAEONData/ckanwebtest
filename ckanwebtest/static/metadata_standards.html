@@ -154,6 +154,48 @@
             });
         }
 
+        function list_jsonattrmaps() {
+            $("#response").val("Loading metadata JSON attribute map list...");
+            $.ajax({
+                url: "/action/metadata_json_attr_map_list",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "metadata_standard_id": $("#name").val(),
+                    "all_fields": true,
+                }),
+                success: function (result) {
+                    $("#response").val(JSON.stringify(result, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
+        function add_jsonattrmap() {
+            $("#response").val("Creating metadata JSON attribute mapping...");
+            $.ajax({
+                url: "/action/metadata_json_attr_map_create",
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "metadata_standard_id": $("#name").val(),
+                    "json_path": $("#jsonattrmap_jsonpath").val(),
+                    "record_attr": $("#jsonattrmap_recordattr").val(),
+                    "is_key": $("#jsonattrmap_iskey").prop("checked"),
+                }),
+                success: function (result) {
+                    $("#response").val(JSON.stringify(result, null, 4));
+                },
+                error: function (call, state, msg) {
+                    $("#response").val(msg);
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
@@ -175,6 +217,13 @@
             <input type="button" value="Delete" onclick="delete_();"/>
             <input type="button" value="Initialize Search Index" onclick="initialize_index();"/>
             <input type="button" value="Delete Search Index" onclick="delete_index();"/>
+        </td></tr>
+        <tr><td>Attr Map - JSON Path:</td><td><input type="text" id="jsonattrmap_jsonpath" style="width: 800px"/> (JSON pointer into metadata template)</td></tr>
+        <tr><td>Attr Map - Record Attr:</td><td><input type="text" id="jsonattrmap_recordattr"/> (name of native package attribute)</td></tr>
+        <tr><td>Attr Map - Is Key:</td><td><input type="checkbox" id="jsonattrmap_iskey"/> (does this attribute form part of a unique key for metadata records?)</td></tr>
+        <tr><td>Attr Map - Submit:</td><td>
+            <input type="button" value="List Attribute Mappings" onclick="list_jsonattrmaps();"/>
+            <input type="button" value="Add Attribute Mapping" onclick="add_jsonattrmap();"/>
         </td></tr>
         <tr><td>Response:</td><td><textarea readonly id="response" style="width: 800px; height: 600px"></textarea></td></tr>
     </table>
