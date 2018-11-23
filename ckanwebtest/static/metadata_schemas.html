@@ -63,7 +63,6 @@
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "title": $("#title").val(),
                     "metadata_standard_id": $("#metadata_standard").val(),
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
@@ -87,7 +86,6 @@
                 dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
-                    "title": $("#title").val(),
                     "metadata_standard_id": $("#metadata_standard").val(),
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
@@ -126,7 +124,6 @@
     <b>Configure Metadata Schemas</b>
     <table>
         <tr><td>Name:</td><td><input type="text" id="name"/> (auto-generated on create)</td></tr>
-        <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
         <tr><td>Metadata Standard:</td><td><select id="metadata_standard"><option value="">(None)</option></select> *</td></tr>
         <tr><td>Organization:</td><td><select id="organization"><option value="">(None)</option></select></td></tr>
         <tr><td>Infrastructure:</td><td><select id="infrastructure"><option value="">(None)</option></select></td></tr>

@@ -58,7 +58,6 @@
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
-                    "title": $("#title").val(),
                     "standard_name": $("#standard_name").val(),
                     "standard_version": $("#standard_version").val(),
                     "parent_standard_id": $("#parent_standard").val(),
@@ -82,7 +81,6 @@
                 dataType: "json",
                 data: JSON.stringify({
                     "id": $("#name").val(),
-                    "title": $("#title").val(),
                     "standard_name": $("#standard_name").val(),
                     "standard_version": $("#standard_version").val(),
                     "parent_standard_id": $("#parent_standard").val(),
@@ -202,7 +200,6 @@
     <b>Configure Metadata Standards</b>
     <table>
         <tr><td>Name:</td><td><input type="text" id="name"/> (auto-generated on create)</td></tr>
-        <tr><td>Title:</td><td><input type="text" id="title"/></td></tr>
         <tr><td>Standard Name:</td><td><input type="text" id="standard_name"/> *</td></tr>
         <tr><td>Standard Version:</td><td><input type="text" id="standard_version"/></td></tr>
         <tr><td>Parent Standard:</td><td><select id="parent_standard"><option value="">(None)</option></select></td></tr>
