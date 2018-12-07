@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import cherrypy
 import re
+import os
 from requests_oauthlib import OAuth2Session
 from urllib.parse import urljoin
 from oauthlib.oauth2 import OAuth2Error
@@ -146,7 +147,7 @@ class Application:
             login_msg = 'You are not logged in.'
             login_hidden = ''
 
-        return INDEX_HTML \
+        return load_template('index.html') \
             .replace('VERSION', __version__) \
             .replace('LOGIN_MESSAGE', login_msg) \
             .replace('LOGIN_HIDDEN', login_hidden)
@@ -154,92 +155,97 @@ class Application:
     @cherrypy.expose
     @authorize
     def jsonapi_metadata_create(self):
-        return JSONAPI_METADATA_CREATE_HTML \
+        return load_template('jsonapi_metadata_create.html') \
             .replace('JSONAPI_URL', self.jsonapi_url) \
             .replace('SAMPLE_METADATA_JSON', load_example('saeon_datacite_record.json'))
 
     @cherrypy.expose
     @authorize
     def jsonapi_metadata_list(self):
-        return JSONAPI_METADATA_LIST_HTML \
+        return load_template('jsonapi_metadata_list.html') \
             .replace('JSONAPI_URL', self.jsonapi_url)
 
     @cherrypy.expose
     @authorize
     def jsonapi_institutions(self):
-        return JSONAPI_INSTITUTIONS_HTML \
+        return load_template('jsonapi_institutions.html') \
             .replace('JSONAPI_URL', self.jsonapi_url)
 
     @cherrypy.expose
     @authorize
     def organizations(self):
-        return ORGANIZATIONS_HTML
+        return load_template('organizations.html')
 
     @cherrypy.expose
     @authorize
     def infrastructures(self):
-        return INFRASTRUCTURES_HTML
+        return load_template('infrastructures.html')
 
     @cherrypy.expose
     @authorize
     def metadata_collections(self):
-        return METADATA_COLLECTIONS_HTML
+        return load_template('metadata_collections.html')
 
     @cherrypy.expose
     @authorize
     def metadata_standards(self):
-        return METADATA_STANDARDS_HTML \
+        return load_template('metadata_standards.html') \
             .replace('SAMPLE_METADATA_JSON', load_example('saeon_datacite_record.json'))
 
     @cherrypy.expose
     @authorize
     def metadata_schemas(self):
-        return METADATA_SCHEMAS_HTML \
+        return load_template('metadata_schemas.html') \
             .replace('SAMPLE_SCHEMA_JSON', load_example('saeon_datacite_schema.json'))
 
     @cherrypy.expose
     @authorize
     def metadata_records(self):
-        return METADATA_RECORDS_HTML \
+        return load_template('metadata_records.html') \
             .replace('SAMPLE_METADATA_JSON', load_example('saeon_datacite_record.json'))
 
     @cherrypy.expose
     @authorize
     def metadata_workflow(self):
-        return METADATA_WORKFLOW_HTML
+        return load_template('metadata_workflow.html')
 
     @cherrypy.expose
     @authorize
     def workflow_states(self):
-        return WORKFLOW_STATES_HTML
+        return load_template('workflow_states.html')
 
     @cherrypy.expose
     @authorize
     def workflow_transitions(self):
-        return WORKFLOW_TRANSITIONS_HTML
+        return load_template('workflow_transitions.html')
 
     @cherrypy.expose
     @authorize
     def vocabularies(self):
-        return VOCABULARIES_HTML
+        return load_template('vocabularies.html')
 
 
 if __name__ == "__main__":
-    cherrypy.config.update(CONFIG_FILE)
+    cherrypy.config.update(CONFIG_FILENAME)
     if cherrypy.config.get('auth.insecure_transport'):
-        import os
         os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
     _ckan_apikey = cherrypy.config.get('ckan.apikey')
     _examples_dir = cherrypy.config.get('ckan.examples_dir')
 
-    cherrypy.tree.mount(Application(), '/', config={'/': {'tools.sessions.on': True}})
-
-    cherrypy.tree.mount(Action(), '/action', config={'/': {'tools.sessions.on': True,
-                                                           'tools.trailing_slash.on': False}})
-
-    cherrypy.tree.mount(Auth(), '/auth', config={'/': {'tools.sessions.on': True,
-                                                       'tools.trailing_slash.on': False}})
-
+    config = {
+        '/': {
+            'tools.sessions.on': True,
+            'tools.trailing_slash.on': False,
+            'tools.staticdir.root': os.path.abspath(os.getcwd())
+        },
+        '/static': {
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': './static',
+        }
+    }
+    cherrypy.tree.mount(Application(), '/', config=config)
+    cherrypy.tree.mount(Action(), '/action', config=config)
+    cherrypy.tree.mount(Auth(), '/auth', config=config)
     cherrypy.engine.start()
     cherrypy.engine.block()
