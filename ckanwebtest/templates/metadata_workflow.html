@@ -81,6 +81,7 @@
                 dataType: "json",
                 data: JSON.stringify({
                     "id": $("#metadata_record_list").val(),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#metadata_record_json").val(JSON.stringify(result, null, 4));
@@ -180,6 +181,7 @@
                 dataType: "json",
                 data: JSON.stringify({
                     "id": $("#workflow_state").val(),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#workflow_rules_json").val(JSON.stringify(result.workflow_rules_json, null, 4));

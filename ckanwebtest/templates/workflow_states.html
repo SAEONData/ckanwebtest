@@ -40,6 +40,7 @@
                 dataType: "json",
                 data: JSON.stringify({
                     "all_fields": $("#all_fields").prop("checked"),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -63,6 +64,7 @@
                     "workflow_rules_json": $("#workflow_rules_json").val(),
                     "metadata_records_private": $("#private").prop("checked"),
                     "revert_state_id": $("#revert_state").val(),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -86,6 +88,7 @@
                     "workflow_rules_json": $("#workflow_rules_json").val(),
                     "metadata_records_private": $("#private").prop("checked"),
                     "revert_state_id": $("#revert_state").val(),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));

@@ -40,6 +40,7 @@
                 dataType: "json",
                 data: JSON.stringify({
                     "all_fields": $("#all_fields").prop("checked"),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -62,6 +63,7 @@
                     "standard_version": $("#standard_version").val(),
                     "parent_standard_id": $("#parent_standard").val(),
                     "metadata_template_json": $("#metadata_template_json").val(),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -85,6 +87,7 @@
                     "standard_version": $("#standard_version").val(),
                     "parent_standard_id": $("#parent_standard").val(),
                     "metadata_template_json": $("#metadata_template_json").val(),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));

@@ -47,6 +47,7 @@
                 data: JSON.stringify({
                     "all_fields": $("#all_fields").prop("checked"),
                     "metadata_standard_id": $("#metadata_standard_filter").val(),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -69,6 +70,7 @@
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
                     "schema_json": $("#schema_json").val(),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -92,6 +94,7 @@
                     "organization_id": $("#organization").val(),
                     "infrastructure_id": $("#infrastructure").val(),
                     "schema_json": $("#schema_json").val(),
+                    "deserialize_json": true,
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
