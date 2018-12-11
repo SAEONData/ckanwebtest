@@ -22,6 +22,7 @@
                     "__ac_password": $("#password").val(),
                     "metadataType": $("#metadata_standard").val(),
                     "jsonData": $("#metadata_json").val(),
+                    "workflowState": $("#workflow_state").val(),
                 }),
                 success: function (result) {
                     $("#response").val(JSON.stringify(result, null, 4));
@@ -39,6 +40,7 @@
         <tr><td>Institution:</td><td><input type="text" id="institution"/> *</td></tr>
         <tr><td>Repository:</td><td><input type="text" id="repository"/> *</td></tr>
         <tr><td>Metadata Standard:</td><td><input type="text" id="metadata_standard"/> *</td></tr>
+        <tr><td>Workflow State:</td><td><input type="text" id="workflow_state"/></td></tr>
         <tr><td>Metadata JSON:</td><td>
             <textarea id="metadata_json" style="width: 800px; height: 400px">SAMPLE_METADATA_JSON</textarea>
         </td></tr>
